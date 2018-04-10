@@ -18,7 +18,6 @@
      <replace dir="${src.dir}" token="%VERSION%" value="${version}">
      </replace>
      <javac srcdir="${src.dir}" destdir ="${build.dir}" source = "1.8" target = "1.8" includeantruntime="false">
-        <classpath refid="classpath.test"/>
      </javac>
      <echo>Compiled the source code.</echo>
    </target>
@@ -28,7 +27,6 @@
        <manifest>
          <attribute name = "Main-Class" value = "Test"/>
        </manifest>
-       <classpath refid="classpath.base"/>
      </jar>
      <echo>Built the jar</echo>
      <antcall target="clean"/>
