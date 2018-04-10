@@ -1,0 +1,45 @@
+<?xml version = "1.0"?>
+<project name = "Hello World Project" default = "info">
+   <property file ="build.properties" />
+   <property name = "src.dir" value = "src"/>
+   <property name = "build.dir" value = "build"/>
+
+   <target name = "info">
+      <echo>ANT Tutorial. Usage: ant variables, compile, build, clean</echo>
+   </target>
+
+   <target name = "variables" depends ="info">
+     <echo>Ant Version: ${ant.version}</echo>
+     <echo>Will replace placeholder to: ${variable}</echo>
+   </target>
+ 
+  <target name ="compile" description = "Compile source code">
+     <mkdir dir ="${build.dir}"/>
+     <replace dir="${src.dir}" token="%VERSION%" value="${version}">
+     </replace>
+     <javac srcdir="${src.dir}" destdir ="${build.dir}" source = "1.8" target = "1.8" includeantruntime="false">
+        <classpath refid="classpath.test"/>
+     </javac>
+     <echo>Compiled the source code.</echo>
+   </target>
+
+   <target name = "build" depends ="compile">
+     <jar destfile = "built.jar" basedir = "${build.dir}/">
+       <manifest>
+         <attribute name = "Main-Class" value = "Test"/>
+       </manifest>
+       <classpath refid="classpath.base"/>
+     </jar>
+     <echo>Built the jar</echo>
+     <antcall target="clean"/>
+   </target>
+
+   <target name = "clean" description = "Clean output directories">
+     <delete>
+       <fileset dir = "${build.dir}">
+         <include name = "**/*.class"/>
+       </fileset>
+     </delete>
+     <echo>Cleaned output directories</echo>
+   </target>
+</project>
